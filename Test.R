@@ -1,0 +1,1 @@
+print("Testing connection between R and GitHub")
