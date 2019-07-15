@@ -1,0 +1,173 @@
+---
+title: "John Hopkins Data Science with R"
+author: "Mandar Bhosale"
+date: "7/15/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Introduction
+
+This is our first project in R. The learning is acquired through **John Hopkins University Mooc ** *Data Science with R*.
+
+## Contents
+
+We have so far learned how to install R and Rstudio. We took a brief tour of the Rstudiio GUI. Other things covered in the Mooc are:  
+- Version Control using Git - [Visit my GitHub Profile](https://github.com/Mandharr)  
+- R Markdown  
+- Types of Analysis  
+- Experimental Design or DOE  
+- [R Documentation](www.rdocumentation.org)  
+
+In order to get a brief understanding of the dataset use `summary(dataset name)`
+
+```{r}
+print("Hello World")
+```
+
+### Descriptive Analysis
+
+Summary of the Data
+Ex: Age distribution in US
+
+### Exloratory Analysis
+
+Examine the Data and find relationships that weren't known before
+Correlation does not imply causation
+
+Useful for discovering new conneciton
+Its just tells that a relation exists, but not the cause
+
+### Inferential Analysis
+
+Small sample of data us used to say something about the population at large. Smaple data plays an important role.
+The data should be related.
+Ex: Sample data from US population can be used to infer the life expectancy of the pupoulation in US.
+
+### Predictive Analysis
+
+Using current and historic data to predict about the future for the query in hand.
+You should be using the right variables and also understand that *correlation does not lead to causation.*
+
+### Causal Analysis
+
+What happens to one variable when we change other.
+
+## Basic Setup
+
+Run RStudio in your Windows/Mac System. 
+
+Type `getwd()` in thr R console to check your current working directory. The working directory is where all data files, R scipts are stored to be used later. 
+Using "File" tab -> "..." -> choose folder to open -> More -> Set as working directory.  
+Or Got to the folder -> Copy the folder path -> in RStudio console -> type `setwd(pathname)` -> Run.
+
+## R Programming
+
+Data Types :  
+- Interger  
+- Number  
+- Character  
+- Logical  
+
+Objects in R  
+- Vector  
+- Matrix  
+- Dataframe  
+- List  
+
+Assign variables
+Varibales store values. Eg: x <- 1, will store 1 in x.
+Values stored in a variables can be printed on the console using the variables by typing `x`. Other way is using `print(x)` function.
+
+`class()` and `mode()` fucntion can help us to understand what type of data is stored in the variables.
+```{r}
+a <- 1
+class(a)
+mode(a)
+```
+```{r}
+b <- "R programming"
+class(b)
+mode(b)
+```
+Function `c()` helps to concatenate values.
+```{r}
+x = c(0.5, 0.6)
+x = c(1,2,3)
+x = c(T,F)
+x = c("a","b","c")
+
+```
+
+Vector Funciton `vector()` creates empty vector with specified type.
+```{r}
+z <- vector("numeric", length = 10)
+y <- vector("character", length = 10)
+```
+
+
+Attributes
+
+-  Matrix has dimnames and names  
+```{r}
+test_mat <- matrix(1:12, nrow = 3, byrow = T)
+rownames(test_mat) <- c("1","2","3")
+colnames(test_mat) <- c("A","B","C","D")
+test_mat
+dimnames(test_mat)
+
+```
+
+- Length of the vector  
+
+Explicit Coercion
+which also means: type conversion
+`as. * ` is used to convert a object from one to other.  Ex: `x <- 0.6 | as.numeric(x)`. 
+
+### Lists
+
+
+```{r}
+# Multi type vector list
+xlist <- list(1,"a", TRUE, 1.1) 
+xlist
+```
+```{r}
+# List can have other list, matrix and vector together
+ylist <- list(xlist, test_mat)
+ylist
+```
+
+### Matrices
+
+`dim()` prints the dimensions in the matrix row | columns
+`attributes` prints the dimensions aswell the names of the rows and columns
+
+We can create a matrix from a vector. consider vector `man`
+```{r}
+#dim(man) <- c(2,5) # this converts vector 'man' to a matrix 'man', using the dimmensions provided.
+#man
+```
+Other function in matrix are 
+- cbind : Adds columns to a matrix or can be used to add vectors to make a matrix
+- rbind : Adds rows 
+ 
+`cb_mat <- cbind(x,y)` or `rb_mat <- rbind(x,y)` 
+
+### Factors
+
+Represents categorical data : Order and Unordered
+- Ordered : Male | Female  
+- Unordered : Low<Med<High  
+Factors have labels
+
+`xfact <- factor(c("yes","no","no","yes","yes))`
+```{r}
+temp <- c("L","M","H","L","L","M")  # Create a vector
+temp_fact   <- factor(temp, levels = c("L","M","H"), ordered = T) # Factor function converts temp variable to factor variable, levels -mentions the order, order - helps give precedence or weightage.
+temp_fact
+```
+
+### Dealing with missing values
+
