@@ -118,6 +118,7 @@ test_mat
 dimnames(test_mat)
 
 ```
+Naming the Matrix can be done using list, as mentioned later.
 
 - Length of the vector  
 
@@ -170,4 +171,226 @@ temp_fact
 ```
 
 ### Dealing with missing values
+
+NA or NaN values
+NaN are for undefined mathematical operations
+
+using `is.na()` or `is.nan()` helps to find the missing values in the vector
+```{r}
+xmiss <- c(1,2,NA,3,4,NaN)
+is.na(xmiss)
+is.nan(xmiss)
+```
+The output is always logical and gives TRUE when there is a missing value at a location.
+
+### Data Frames
+
+Used to store tabular data. Is like a list and all list have the same length. Column have varied data type.
+Attributes are `row.name()` 
+We can import data from our system using `read.table()` or `read.csv()`.
+
+To create dataframe : xframe <- data.frame(1:10)
+
+We can create dataframe from vectors.
+```{r}
+# Create varied vectors 
+ID <- c(1:10)
+Name <- c("a","b","c","d","e","f","g","h","i","j")
+xdata <- data.frame(ID,Name)
+xdata
+```
+
+This creates a dataframe from the vectors and uses the vector name as column name.  
+Other used functions :  
+- head(): Gives top 6 rows from a dataframe `head(xdata)`  
+- tail(): GIves last 6 rows from the dataframe `tail(xdata)`  
+- `xdata$ID` will print only the ID column from the dataframe  
+- str(): Will print the structure of the dataframe `str(xdata)`  
+- Summary(): Will print the statistical summary of all the numerical values `summary(xdata)`
+- subset(): To retrieve data from a dataframe using a condition `subset(xdata, subset = ID>5)`
+
+To add a new column to our dataframe. Simply create a vector or pass vector into a column name not already present in the dataframe.
+Ex
+```{r}
+newcolumn <- c(21:30)
+xdata$Marks <- newcolumn
+xdata
+```
+
+Using `rbind()` we can add a new row to a dataframe.
+Ex
+```{r}
+xdata <- rbind(xdata, c(11,"k",31))
+xdata
+```
+
+### Name Attributes
+
+R objects like Vector, Matrix, Data.frame has names 
+
+Objects Excample
+vector  x <- 1:3 | name(x) <- c("a","b","c")
+list    x <- list(a=1, b=2, c=3)
+Marix   dimnames(test_mat) <- list(c(provide row names),c(provie col names))
+
+
+### Reading Data into R
+
+`read.table(), read.csv()` function can be used to read tabular data
+`readLines` is used to read lines of a text file.
+If we have a R code files that can be used by source() function
+load() read binary objects in R
+
+`read.table`is the common.
+- file: is the file name or connection  
+- header: tells first line is header name  
+- sep: indicates how the column are seperated  
+- colClasses: indicates the class of each column in the dataset
+- nrows: the number of lines in the set
+- skip: the number of lines to skip from beginning
+- sringsAsFactors: char variabes as factors?
+
+R automatically skips lines begining with #.
+
+Rough Calc says if the dataset is more than ur RAM size, dont use it.
+
+if no comment is present : then comment.char =""
+
+*When reading dataset R goes through each row to set the class. But if we expplicitly mention the class, then things get fast.
+```{r}
+# initial <- read.table("database.txt", nrows = 100) # get a sample of the dataset
+# classes <- sapply(inital, class) # find the class of sample dataser columns
+# AllData <- read.table("database.txt", colClasses = classes) # Explicitly mention the class of the columns
+```
+Knowing the number of Rows also helps
+
+### How to make R runs faster?
+
+- Check system memory  
+- other pplication running  
+- other users?  
+- 
+
+### How  to check the memory required for dataset.
+
+1500000 rows and 120 columns with numeric data
+Therefore : 1500000 * 120 * 8
+            1440000000 / 2^20
+            1.34 GB
+Hence we need around twice the memory.
+
+### Textual Formats
+
+dumping and dputing : This is used to read metadata of a dataset.
+When in a version control environment this extra information is good for tracking.
+"Textual Format data takes a lot of space"
+
+Example
+```{r}
+ydata <- data.frame(a =  1,b="a") # Create a frame
+dput(ydata) # Run dput(). This creates the structure shown below in commment, with the class, row name, col name, etc
+# structure(list(a = 1, b = structure(1L, .Label = "a", class = "factor")), class = "data.frame", row.names = c(NA, -1L))
+dput(ydata, file = "dputydata.R") # Save the result in a file, to use later
+new.ydata <- dget("dputydata.R") # import the file to use
+new.ydata
+```
+
+dump() : This funciton can be used on multiple R objects as opposed to the dput() shown in example above. and can be retrieved using `source()`
+
+```{r}
+x <- "'foo"
+y <- data.frame(a=1,b="a")
+dump(c("x","y"),file = "data.R")
+rm(x,y)
+source("data.R") # read from the dump file
+x
+y
+```
+
+## Connections 
+
+- File: Open a file  
+- gzfile: compressed gzip file  
+- bzfile: bzip2 compressed file  
+- url: connect to webpage  
+
+The `file()` structure:  
+```{r}
+str(file)
+```
+
+Description is the name of the file.  
+open is to provide the mode we want to open the file. Read, write, Append (rwa) and in binary : rb,wb,ab
+
+con <- file("foo.txt", "r)
+data <- read.csv(con)
+
+or data <- read.csv("foo.txt")
+
+the conneciton function can be used for reading specific lines from a file.
+con <- gzfile("words.gz")
+x<- readLines(con, 10) # This reads the first 10 lines.
+
+`writeLines()` can be used to write the vector to a file, each element on a single line.
+
+### Subsetting
+
+[] : single brackets: subsets objects of the same cass.. therfore , vector gives vector  
+[[]]: used with list or dataframe: therfore mulitple classess elements can be subsetted.  
+$: When the objects in list or dataframe has *name* we use the dollar sign
+```{r}
+x <- c(1,2,3,4,5)
+x[1]
+x[1:4]
+x[x > "a"]
+u <- x > "a"
+x[u]
+```
+```{r}
+y <- list(bar = 0.6)
+y$bar
+```
+```{r}
+x <- list(foo = 1:4, bar = 0.6, baz= "hello")
+x[c(1,3)] # returns list objects in first and third index : 
+# [[c(1,3)]] : Means 1 object in the list, and third element in that object.
+```
+
+For Matrix
+
+Excample : x[,1] or x[1,] or x[1,2] ,etc
+
+Removing Missing values in a vector. We can do this using logical values
+```{r}
+x = c(1,2,NA,4,NA,5)
+bad = is.na(x) # stores logical values of values with TRUE in NA element
+x[!bad] # prints values where its NOT TRUE for NA
+```
+
+To check if two vectors do not have NA in a similar position index use `complete.cases()`. both vector must be same length.
+```{r}
+x <- c(1,NA,NA,4)
+y <- c("a","b",NA,"c")
+checkna <- complete.cases(x,y)
+checkna
+x[checkna]
+```
+
+Removing Missing values in dataframe
+```{r}
+airquality[1:6,]
+good <- complete.cases(airquality)
+good
+airquality[good, ][1:6, ]
+```
+
+Complete.Cases is good when we have large datasets, and we want tp sibset out all the missing values
+
+### Vectorized Operations
+
+How this work is, each element of the two vectors are operated upon parallely. 1-1,2-2, etc.
+x<-1:4 | y<- 6:9 Therefore, 1+6,2+7, etc. This also works in matrix.
+
+
+
 
