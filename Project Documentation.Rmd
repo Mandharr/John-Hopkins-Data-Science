@@ -388,8 +388,55 @@ Complete.Cases is good when we have large datasets, and we want tp sibset out al
 
 ### Vectorized Operations
 
-How this work is, each element of the two vectors are operated upon parallely. 1-1,2-2, etc.
+How this work is, each element of the two vectors are operated upon parallely. 1-1,2-2, etc. If the one vector has les elements then then vector with
+less elemenent will be used in the alternate manner, 1st element , then 2nd , then agin 1st for the calculations
+
 x<-1:4 | y<- 6:9 Therefore, 1+6,2+7, etc. This also works in matrix.
+If the vectors are of different lengths, R 'recycles' the shorter vector until it is the same length as the longer vector.
+when you ask R to compute z * 2 + 100,what it really computes is this: z * c(2, 2, 2) + c(100, 100, 100).
+
+## Installing SWIRL
+
+### Statistics With Interactive R Learning  
+`install.packages("swirl")`
+`library(swirl)`
+
+### Swirl Learning
+
+R Workspace
+- abs() : to get the absolute value of number  
+- sqrt() : square root.  
+- getwd(): get present woking directory  
+- ls() : list all objects in the current work environment.  
+- dir(): lists all files in the current working directory.| list.files().  
+- args(): to check the arguments a function can take.  
+- dir.create(): create a new directory.`dir.create("testdir)` in pwd.  
+- setwd(): set a dir as working. `setwd("testdir")`.  
+- file.create(): create a file in pwd. `file.create("mytest.R")`  
+- file.exists(): check if a file is present in a directory. `file.exists("mytest.R")`  
+- file.info().  
+- file.rename().  
+- file.copy().  
+- file.path("")
+- file.path('folder1'): create platfrom independent file path.  
+# dir.create(file.path("testdir2","testdir3"), recursive = TRUE) #Create a folder in folder as directory  
+
+Sequence of Numbers
+- 1:20.integer  
+- pi:10.real numbers  
+- 15:1 descending.  
+- seq(): seq(1,20)  
+- seq(0,10,by=0.5)  
+- seq(5,10,length=30): this gives 30 numbers between 5-10.  
+- length(): to find the length of a vector.
+# 1:length(my_seq).  gives vector of length 1-myseq length.
+- seq(along.with = myseq)
+- seq_along(myseq)
+- rep(0, times=40) : replicate 0, 40 times  
+- rep(c(0,1,2), times = 10)  
+- rep(c(0,1,2), each=10). Each element 10 times  
+
+Vectors
 
 
 
