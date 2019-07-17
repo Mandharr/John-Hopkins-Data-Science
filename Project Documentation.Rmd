@@ -518,4 +518,176 @@ To give column names : cnames <- c("patient", "age","weight", "bp", "rating","te
 `colnames(my_data) <- cnames` This adds names to every column.
 
 
+## Control Structures 
+
+- if, else: testing a condition  
+- for: execute loop fixed number of times  
+- while: loop while condition is true  
+- repeat: infinite loop  
+- break: break a loop  
+- next: skip an iteration of a loop.  
+- return: exit a function  
+
+
+### IF - ELSE
+
+if()
+{
+}
+else
+
+```{r}
+if(x>3) {
+  y <- 10
+} else {
+  y <- 0
+  
+}
+```
+```{r}
+y <- if(x > 3){
+  10
+} else {
+  0
+}
+```
+
+Just IF :
+
+if(){}  # this works fine.
+
+### FOR 
+
+It is the most common type of loop. below are some of the ways we can do the same job
+```{r}
+for(i in 1:10) {
+  print(i)
+}
+```
+```{r}
+x <- c("a","b","c","d")
+
+for(i in 1:4) {
+  print(x[i])
+}
+
+for(i in seq_along(x)) {
+  print(x[i])
+}
+
+for(letter in x){
+  print(letter)
+}
+
+for (i in 1:4) print(x[i]) 
+```
+
+Nested For Loop
+
+```{r}
+x <- matrix(1:6,2,3)
+
+for(i in seq_len(nrow(x))) {
+  for(j in seq_len(ncol(x))) {
+    print(x[i,j])
+  }
+}
+```
+
+### WHIle Loop
+
+```{r}
+count <- 0
+while(count < 10) {
+  print(count)
+  count <- count +1 
+}
+```
+
+```{r}
+z <- 5
+
+while(z >= 3 && z <= 10) {
+  print(z)
+  coin <- rbinom(1,1,0.5) # random number generation
+  
+  if(coin ==1) {
+    z<- z+1
+  } else {
+    z <- z -1
+  }
+}
+```
+
+### Repeat, Next & Break
+
+```{r}
+for (i in 1:100) {
+  if(i <= 20){
+    next # skips number till 20 
+    
+  }
+  print(i)
+}
+```
+Returns tell to exit the function and return the last value
+
+# Lets Write Function 
+
+Function are used a lot in data or statistical analysis .
+Its always good to write function in a text file for reproducibility.
+
+```{r}
+add2 <- function(x,y) { # function to create, accepts two values and returns the result after computing
+  x + y # tells what to do with the values accepted
+} 
+  
+```
+```{r}
+x <- 1:20
+aboveten <- function(x) { # takes a vector from user and send back values greater than 10
+  use <- x > 10
+  x[use]
+}
+
+above <- function(x, n) { # similar to aboveten function, but this also accepts the condition for subsetting , it can also be default :n=10
+  use <- x > n
+  x[use]
+}
+```
+
+Accept matrix nd find mean
+
+```{r}
+columnmean <- function(y) {
+  nc <- ncol(y) # find the number of column in the matrix
+  means <- numeric(nc) # making sure the number are numeric for looping
+  
+  for(i in 1:nc) { # create a for-loop of i from 1 to columns in matrix
+    means[i] <- mean(y[,i]) # means[i] :create a dynamic vector | mean(y[,i]) mean of the [i] column 
+  }
+  means # return mean
+}
+
+columnmean(airquality) # passing the airquality dataframe
+```
+
+They Belong to the class : Function
+We can nest funcion and be passed in other function.
+
+Named arguments have default values
+formals  : returns a list of all fornal arguuments
+Argument matching is done positionally or by name.
+
+Which means :
+```{r}
+mydata <- 1:20
+sd(mydata)
+sd(x=mydata)
+sd(x= mydata, na.rm=FALSE)
+sd(na.rm = FALSE, x=mydata)
+# they all mean the same .
+```
+USing args() can tell you what arguments are necesaary and what are there locations.
+
 
