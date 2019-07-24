@@ -690,4 +690,81 @@ sd(na.rm = FALSE, x=mydata)
 ```
 USing args() can tell you what arguments are necesaary and what are there locations.
 
+We can have function with argument value = NULL
+
+### Lazy Evaluation
+
+Arguments to functions are evaluated only as needed.
+
+```{r}
+func <- function(a,b){ # Even if we need 2 arguments, R can function with 1. 
+  a^2                  # Since R does nt use value of B, there is no error
+}
+
+func(2)
+```
+BUt, if R needs B and B is not passed by user this will produce error.
+
+```{r}
+func <- function(a,b) {
+  print(a)  # A will be executed
+  print(b) # Since R is using B, console will gibe error of missing value
+}
+
+func(45)
+```
+
+The ... Arguments 
+
+We can use argument list from other function, in our custom function.
+
+```{r}
+myplot <- function (x,y,type ="l", ...) { # We are customizing plot function and setting default type to "L", and using every other argument
+  plot(x,y,type =type, ...)
+}
+```
+
+Scoping Rules of R
+
+When we are working in R, and if there are functions with same name, R takes the ordered way of using the funciton. Which starts from Global Environment.
+`search()` function can be used to know the order.
+
+
+# Lexical Scoping 
+
+```{r}
+f <- function(x,y) {  # x and Y are formal arguments.
+  x^2 + y /z          # Here z is not defined but used. Z is a free variable
+}
+
+```
+
+Scoping rule of R determines what value needs to be assigned to free variable. They are not local variables 
+if the value is not found in environment, it moves to parent environemt unitl reaches the global environment. 
+And Still contniues to reach the empty environment. And if still not found " ERROR OCCURS"
+
+```{r}
+make.power <- function(n) {
+  pow <- function(x) {
+    x^n
+  }
+  pow
+}
+cube <- make.power(3) #We can make a function act differently based on value we provide
+cube(3) 
+
+cube <- make.power(2)
+cube(3)
+```
+
+How to know what the function environemnt ?
+
+`ls(environment(cube))` returns "n" and "pow"
+`get("n",environment(cube))` returns value of n
+
+
+Optimization
+
+Write a Constructor
+
 
