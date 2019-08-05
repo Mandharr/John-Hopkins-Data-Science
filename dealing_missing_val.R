@@ -97,6 +97,8 @@ house_sample$WIFI = ifelse(is.na(house_sample$WIFI), "Y", house_sample$WIFI)
 
 house_sample$WIFI = ifelse(house_sample$WIFI =="Y", 3, house_sample$WIFI)
 
+#********************************************************************************************
+
 # Mean price of house by WIFI:
 # Wifi is the target variable, therefore price is depedent on wifi availability.
 
@@ -142,3 +144,4 @@ table(house_2$BEDS)
 #   missForest iteration 4 in progress...done!
 #   There were 12 warnings (use warnings() to see them)
 # > warnings()
+
