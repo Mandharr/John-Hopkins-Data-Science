@@ -1,3 +1,5 @@
+# In this file, I have repeated the house_price dataset, taking  sample, and replacing mising value using conditional statements.
+
 library(dplyr)
 house_price <- read.csv("House_Price.csv")
 house_price[house_price == ""] = NA 
